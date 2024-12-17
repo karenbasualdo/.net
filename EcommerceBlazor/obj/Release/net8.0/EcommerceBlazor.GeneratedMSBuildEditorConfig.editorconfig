@@ -1,0 +1,83 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = EcommerceBlazor
+build_property.RootNamespace = EcommerceBlazor
+build_property.ProjectDir = C:\Users\sp\source\repos\EcommerceBlazor\EcommerceBlazor\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\sp\source\repos\EcommerceBlazor\EcommerceBlazor
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Pages/Empleados.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFbXBsZWFkb3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Pages/Productos.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcm9kdWN0b3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Pages/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Data/Empleados.razor]
+build_metadata.AdditionalFiles.TargetPath = RGF0YVxFbXBsZWFkb3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Data/Producto.razor]
+build_metadata.AdditionalFiles.TargetPath = RGF0YVxQcm9kdWN0by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Data/Stock.razor]
+build_metadata.AdditionalFiles.TargetPath = RGF0YVxTdG9jay5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-fd9z2rn2q1
+
+[C:/Users/sp/source/repos/EcommerceBlazor/EcommerceBlazor/Components/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-p6mxiqyf16

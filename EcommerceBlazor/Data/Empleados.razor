@@ -1,0 +1,33 @@
+﻿@page "/empleados"
+@inject EcommerceBlazor.Data.AppDbContext dbContext
+
+<h3>Gestión de Empleados</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Puesto</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var empleado in empleados)
+        {
+            <tr>
+                <td>@empleado.Nombre</td>
+                <td>@empleado.Puesto</td>
+                <td>@empleado.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<EcommerceBlazor.Models.Empleado> empleados;
+
+    protected override async Task OnInitializedAsync()
+    {
+        empleados = await dbContext.Empleados.ToListAsync();
+    }
+}

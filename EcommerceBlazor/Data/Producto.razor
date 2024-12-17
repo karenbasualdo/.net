@@ -1,0 +1,140 @@
+﻿@page "/producto"
+@inject EcommerceBlazor.Data.AppDbContext dbContext
+
+<h3>Gestión de Productos</h3>
+
+<!-- Botón para agregar un nuevo producto -->
+<button class="btn btn-primary mb-3" @onclick="MostrarFormularioAgregar">Agregar Producto</button>
+
+<!-- Tabla de productos -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in productos)
+        {
+            <tr>
+                <td>@producto.Nombre</td>
+                <td>@producto.Descripcion</td>
+                <td>@producto.Precio.ToString("C")</td>
+                <td>@producto.Stock</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" @onclick="() => MostrarFormularioEditar(producto)">Editar</button>
+                    <button class="btn btn-danger btn-sm" @onclick="() => EliminarProducto(producto.Id)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal para agregar/editar producto -->
+@if (mostrarFormulario)
+{
+    <div class="modal show d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@tituloFormulario</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarFormulario"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" @bind="productoActual.Nombre" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-control" @bind="productoActual.Descripcion"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <input type="number" step="0.01" class="form-control" @bind="productoActual.Precio" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" @bind="productoActual.Stock" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CerrarFormulario">Cancelar</button>
+                    <button class="btn btn-primary" @onclick="GuardarProducto">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<EcommerceBlazor.Model.Producto> productos;
+    private EcommerceBlazor.Models.Producto productoActual = new EcommerceBlazor.Models.Producto();
+    private bool mostrarFormulario = false;
+    private string tituloFormulario = "Agregar Producto";
+
+    protected override async Task OnInitializedAsync()
+    {
+        productos = await dbContext.Productos.ToListAsync();
+    }
+
+    // Mostrar formulario para agregar un nuevo producto
+    private void MostrarFormularioAgregar()
+    {
+        productoActual = new EcommerceBlazor.Models.Producto();
+        tituloFormulario = "Agregar Producto";
+        mostrarFormulario = true;
+    }
+
+    // Mostrar formulario para editar un producto existente
+    private void MostrarFormularioEditar(EcommerceBlazor.Models.Producto producto)
+    {
+        productoActual = new EcommerceBlazor.Models.Producto
+        {
+            Id = producto.Id,
+            Nombre = producto.Nombre,
+            Descripcion = producto.Descripcion,
+            Precio = producto.Precio,
+            Stock = producto.Stock
+        };
+        tituloFormulario = "Editar Producto";
+        mostrarFormulario = true;
+    }
+
+    // Cerrar el formulario modal
+    private void CerrarFormulario()
+    {
+        mostrarFormulario = false;
+    }
+
+    // Guardar producto (Agregar o Editar)
+    private async Task GuardarProducto()
+    {
+        if (productoActual.Id == 0)
+        {
+            dbContext.Productos.Add(productoActual);
+        }
+        else
+        {
+            dbContext.Productos.Update(productoActual);
+        }
+        await dbContext.SaveChangesAsync();
+        productos = await dbContext.Productos.ToListAsync();
+        CerrarFormulario();
+    }
+
+    // Eliminar un producto
+    private async Task EliminarProducto(int id)
+    {
+        var producto = await dbContext.Productos.FindAsync(id);
+        if (producto != null)
+        {
+            dbContext.Productos.Remove(producto);
+            await dbContext.SaveChangesAsync();
+            productos = await dbContext.Productos.ToListAsync();
+        }
+    }
+}

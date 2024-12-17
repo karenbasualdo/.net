@@ -1,0 +1,6 @@
+C:\Users\sp\source\repos\EcommerceBlazor\EcommerceBlazor\obj\Debug\net8.0\EcommerceBlazor.csproj.AssemblyReference.cache
+C:\Users\sp\source\repos\EcommerceBlazor\EcommerceBlazor\obj\Debug\net8.0\EcommerceBlazor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sp\source\repos\EcommerceBlazor\EcommerceBlazor\obj\Debug\net8.0\EcommerceBlazor.AssemblyInfoInputs.cache
+C:\Users\sp\source\repos\EcommerceBlazor\EcommerceBlazor\obj\Debug\net8.0\EcommerceBlazor.AssemblyInfo.cs
+C:\Users\sp\source\repos\EcommerceBlazor\EcommerceBlazor\obj\Debug\net8.0\EcommerceBlazor.csproj.CoreCompileInputs.cache
+C:\Users\sp\source\repos\EcommerceBlazor\EcommerceBlazor\obj\Debug\net8.0\EcommerceBlazor.MvcApplicationPartsAssemblyInfo.cache

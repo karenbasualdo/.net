@@ -1,0 +1,141 @@
+﻿@page "/empleado"
+@inject EcommerceBlazor.Data.AppDbContext dbContext
+
+<h3>Gestión de Empleados</h3>
+
+<!-- Botón para agregar un nuevo empleado -->
+<button class="btn btn-primary mb-3" @onclick="MostrarFormularioAgregar">Agregar Empleado</button>
+
+<!-- Tabla de empleados -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var empleado in empleados)
+        {
+            <tr>
+                <td>@empleado.Nombre</td>
+                <td>@empleado.Apellido</td>
+                <td>@empleado.Email</td>
+                <td>@empleado.Telefono</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" @onclick="() => MostrarFormularioEditar(empleado)">Editar</button>
+                    <button class="btn btn-danger btn-sm" @onclick="() => EliminarEmpleado(empleado.Id)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal para agregar/editar empleado -->
+@if (mostrarFormulario)
+{
+    <div class="modal show d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@tituloFormulario</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarFormulario"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" @bind="empleadoActual.Nombre" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Apellido</label>
+                        <input type="text" class="form-control" @bind="empleadoActual.Apellido" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" @bind="empleadoActual.Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" @bind="empleadoActual.Telefono" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CerrarFormulario">Cancelar</button>
+                    <button class="btn btn-primary" @onclick="GuardarEmpleado">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<EcommerceBlazor.Models.Empleado> empleados;
+    private EcommerceBlazor.Models.Empleado empleadoActual = new EcommerceBlazor.Models.Empleado();
+    private bool mostrarFormulario = false;
+    private string tituloFormulario = "Agregar Empleado";
+
+    protected override async Task OnInitializedAsync()
+    {
+        empleados = await dbContext.Empleados.ToListAsync();
+    }
+
+    // Mostrar formulario para agregar un nuevo empleado
+    private void MostrarFormularioAgregar()
+    {
+        empleadoActual = new EcommerceBlazor.Models.Empleado();
+        tituloFormulario = "Agregar Empleado";
+        mostrarFormulario = true;
+    }
+
+    // Mostrar formulario para editar un empleado existente
+    private void MostrarFormularioEditar(EcommerceBlazor.Models.Empleado empleado)
+    {
+        empleadoActual = new EcommerceBlazor.Models.Empleado
+        {
+            Id = empleado.Id,
+            Nombre = empleado.Nombre,
+            Apellido = empleado.Apellido,
+            Email = empleado.Email,
+            Telefono = empleado.Telefono
+        };
+        tituloFormulario = "Editar Empleado";
+        mostrarFormulario = true;
+    }
+
+    // Cerrar el formulario modal
+    private void CerrarFormulario()
+    {
+        mostrarFormulario = false;
+    }
+
+    // Guardar empleado (Agregar o Editar)
+    private async Task GuardarEmpleado()
+    {
+        if (empleadoActual.Id == 0)
+        {
+            dbContext.Empleados.Add(empleadoActual);
+        }
+        else
+        {
+            dbContext.Empleados.Update(empleadoActual);
+        }
+        await dbContext.SaveChangesAsync();
+        empleados = await dbContext.Empleados.ToListAsync();
+        CerrarFormulario();
+    }
+
+    // Eliminar un empleado
+    private async Task EliminarEmpleado(int id)
+    {
+        var empleado = await dbContext.Empleados.FindAsync(id);
+        if (empleado != null)
+        {
+            dbContext.Empleados.Remove(empleado);
+            await dbContext.SaveChangesAsync();
+            empleados = await dbContext.Empleados.ToListAsync();
+        }
+    }
+}

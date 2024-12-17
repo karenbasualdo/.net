@@ -1,0 +1,139 @@
+﻿@page "/stock"
+@inject EcommerceBlazor.Data.AppDbContext dbContext
+
+<h3>Gestión de Stock</h3>
+
+<!-- Botón para agregar una nueva entrada de stock -->
+<button class="btn btn-primary mb-3" @onclick="MostrarFormularioAgregar">Agregar Stock</button>
+
+<!-- Tabla de stock -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Fecha de Ingreso</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entrada in stockEntries)
+        {
+            <tr>
+                <td>@entrada.Producto.Nombre</td>
+                <td>@entrada.Cantidad</td>
+                <td>@entrada.FechaIngreso.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" @onclick="() => MostrarFormularioEditar(entrada)">Editar</button>
+                    <button class="btn btn-danger btn-sm" @onclick="() => EliminarEntrada(entrada.Id)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal para agregar/editar stock -->
+@if (mostrarFormulario)
+{
+    <div class="modal show d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@tituloFormulario</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarFormulario"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Producto</label>
+                        <select class="form-control" @bind="entradaActual.ProductoId">
+                            <option value="0">Seleccione un producto</option>
+                            @foreach (var producto in productos)
+                            {
+                                <option value="@producto.Id">@producto.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" @bind="entradaActual.Cantidad" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CerrarFormulario">Cancelar</button>
+                    <button class="btn btn-primary" @onclick="GuardarEntrada">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<EcommerceBlazor.Models.Stock> stockEntries;
+    private List<EcommerceBlazor.Models.Producto> productos;
+    private EcommerceBlazor.Models.Stock entradaActual = new EcommerceBlazor.Models.Stock();
+    private bool mostrarFormulario = false;
+    private string tituloFormulario = "Agregar Stock";
+
+    protected override async Task OnInitializedAsync()
+    {
+        stockEntries = await dbContext.Stocks.Include(s => s.Producto).ToListAsync();
+        productos = await dbContext.Productos.ToListAsync();
+    }
+
+    // Mostrar formulario para agregar una nueva entrada
+    private void MostrarFormularioAgregar()
+    {
+        entradaActual = new EcommerceBlazor.Models.Stock();
+        tituloFormulario = "Agregar Stock";
+        mostrarFormulario = true;
+    }
+
+    // Mostrar formulario para editar una entrada existente
+    private void MostrarFormularioEditar(EcommerceBlazor.Models.Stock entrada)
+    {
+        entradaActual = new EcommerceBlazor.Models.Stock
+        {
+            Id = entrada.Id,
+            ProductoId = entrada.ProductoId,
+            Cantidad = entrada.Cantidad,
+            FechaIngreso = entrada.FechaIngreso
+        };
+        tituloFormulario = "Editar Stock";
+        mostrarFormulario = true;
+    }
+
+    // Cerrar el formulario modal
+    private void CerrarFormulario()
+    {
+        mostrarFormulario = false;
+    }
+
+    // Guardar entrada de stock (Agregar o Editar)
+    private async Task GuardarEntrada()
+    {
+        if (entradaActual.Id == 0)
+        {
+            entradaActual.FechaIngreso = DateTime.Now;
+            dbContext.Stocks.Add(entradaActual);
+        }
+        else
+        {
+            dbContext.Stocks.Update(entradaActual);
+        }
+        await dbContext.SaveChangesAsync();
+        stockEntries = await dbContext.Stocks.Include(s => s.Producto).ToListAsync();
+        CerrarFormulario();
+    }
+
+    // Eliminar una entrada de stock
+    private async Task EliminarEntrada(int id)
+    {
+        var entrada = await dbContext.Stocks.FindAsync(id);
+        if (entrada != null)
+        {
+            dbContext.Stocks.Remove(entrada);
+            await dbContext.SaveChangesAsync();
+            stockEntries = await dbContext.Stocks.Include(s => s.Producto).ToListAsync();
+        }
+    }
+}
